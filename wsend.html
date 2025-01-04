@@ -1,0 +1,117 @@
+ <!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDM WSEND</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input,
+    textarea {
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:active {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>WSEND by PDM Inc.</h1>
+    <form id="webhookForm">
+      <input type="url" id="webhookUrl" placeholder="URL du webhook Discord" required>
+      <input type="text" id="username" placeholder="Nom d'utilisateur" required>
+      <textarea id="message" placeholder="Votre message" rows="5" required></textarea>
+      <button type="submit">Envoyer</button>
+    </form>
+    <div id="confirmation" style="display: none; margin-top: 20px;">
+      <h2>Message envoyé avec succès !</h2>
+    </div>
+  </div>
+  
+  <script>
+    document.getElementById('webhookForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const webhookUrl = document.getElementById('webhookUrl').value;
+      const username = document.getElementById('username').value;
+      const message = document.getElementById('message').value;
+
+      if (!webhookUrl || !username || !message) {
+        alert('Veuillez remplir tous les champs.');
+        return;
+      }
+
+      const payload = {
+        username: username,
+        content: message
+      };
+
+      fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+        .then(response => {
+          if (response.ok) {
+            document.getElementById('webhookForm').reset();
+            document.getElementById('confirmation').style.display = 'block';
+          } else {
+            alert('Erreur lors de l\'envoi du message : ' + response.statusText);
+          }
+        })
+        .catch(error => {
+          console.error('Erreur :', error);
+          alert('Erreur lors de l\'envoi du message.');
+        });
+    });
+  </script>
+</body>
+
+</html>
