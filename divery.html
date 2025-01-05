@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tosdiscord.fr</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #5865F2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            padding: 20px;
+        }
+        .search-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        select {
+            padding: 10px;
+            width: 320px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #5865F2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4752c4;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    
+
+        <section class="search-container">
+            <h2>Vérifiez une action ou un comportement</h2>
+            <p>Choisissez une action ou un comportement pour vérifier s'il est conforme aux ToS de Discord :</p>
+            <select id="search">
+                <option value="">-- Sélectionnez une action --</option>
+                <option value="Partager des contenus NSFW">Partager des contenus NSFW</option>
+                <option value="Utiliser des bots sans autorisation">Utiliser des bots sans autorisation</option>
+                <option value="Harceler un utilisateur">Harceler un utilisateur</option>
+                <option value="scam">Scam</option>
+                <option value="Spam de messages">Spam de messages</option>
+                <option value="Impersonation">Impersonation</option>
+                <option value="Diffusion de malwares">Diffusion de malwares</option>
+                <option value="Partage de contenu piraté">Partage de contenu piraté</option>
+                <option value="Partage d'informations personnelles">Partage d'informations personnelles</option>
+                <option value="Incitation à la haine">Incitation à la haine</option>
+                <option value="Violation des droits d'auteur">Violation des droits d'auteur</option>
+                <option value="Actes de phishing">Actes de phishing</option>
+                <option value="Usurpation de compte">Usurpation de compte</option>
+                <option value="Manipulation de votes">Manipulation de votes</option>
+                <option value="Publication de contenu choquant">Publication de contenu choquant</option>
+                <option value="Utilisation de mods illégaux">Utilisation de mods illégaux</option>
+                <option value="Promotion de drogues illégales">Promotion de drogues illégales</option>
+                <option value="Hameçonnage d'informations bancaires">Hameçonnage d'informations bancaires</option>
+                <option value="Organisation de raids">Organisation de raids</option>
+                <option value="Falsification de preuves">Falsification de preuves</option>
+                <option value="Accès non autorisé aux serveurs">Accès non autorisé aux serveurs</option>
+                <option value="Promouvoir des contenus terroristes">Promouvoir des contenus terroristes</option>
+                <option value="Fraude ou arnaques">Fraude ou arnaques</option>
+                <option value="Partager des contenus non consensuels">Partager des contenus non consensuels</option>
+                <option value="Discours haineux">Discours haineux</option>
+                <option value="Revente de comptes">Revente de comptes</option>
+                <option value="Collecte de données utilisateur">Collecte de données utilisateur</option>
+                <option value="Création de serveurs pour activités illégales">Création de serveurs pour activités illégales</option>
+                <option value="Non-respect des consignes des modérateurs">Non-respect des consignes des modérateurs</option>
+            </select>
+            <button onclick="checkToS()">Vérifier</button>
+            <div class="results" id="results"></div>
+        </section>
+       
+
+    <script>
+
+        function redirectToDiscord() {
+
+            // Redirection vers votre lien Discord
+
+            window.location.href = "https://discord.com/login";
+
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <section class="discord-container">
+
+        <h2>Rejoindre Discord</h2>
+
+        <button onclick="redirectToDiscord()">Portail de connexion Discord</button>
+
+    </section>
+
+</body>
+</body>
+ </main>
+    <footer>
+        <p>&copy; 2024 | ToS Discord </p>
+    </footer>
+
+    <script>
+        function logSearch(action, result) {
+            fetch('/log', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: action,
+                    result: result,
+                    timestamp: new Date().toISOString()
+                }),
+            }).catch(err => console.error('Erreur lors de l\'enregistrement :', err));
+        }
+
+        function checkToS() {
+            const searchInput = document.getElementById('search').value;
+            const resultsDiv = document.getElementById('results');
+
+            // Simule une vérification des ToS
+            const responses = {
+                "Partager des contenus NSFW": "Non conforme : Discord interdit les contenus NSFW hors des canaux appropriés.",
+                "Utiliser des bots sans autorisation": "Non conforme : Les bots doivent respecter l'API Discord et être autorisés par le serveur.",
+                "Harceler un utilisateur": "Non conforme : Discord interdit strictement le harcèlement sous toutes ses formes.",
+                "scam": "Non conforme : Discord interdit les actes malveillants.",
+                "Spam de messages": "Non conforme : Le spam de messages ou de mentions est interdit.",
+                "Impersonation": "Non conforme : Se faire passer pour une autre personne ou un autre serveur est interdit.",
+                "Diffusion de malwares": "Non conforme : Toute tentative de diffuser des logiciels malveillants est strictement interdite.",
+                "Partage de contenu piraté": "Non conforme : Le partage ou la promotion de contenu piraté est interdit.",
+                "Partage d'informations personnelles": "Non conforme : Le partage d'informations personnelles sans consentement est interdit.",
+                "Incitation à la haine": "Non conforme : Toute incitation à la haine ou discrimination est strictement interdite.",
+                "Violation des droits d'auteur": "Non conforme : Discord interdit les violations des droits d'auteur.",
+                "Actes de phishing": "Non conforme : Les tentatives de phishing sont strictement interdites.",
+                "Usurpation de compte": "Non conforme : L'usurpation de compte ou l'accès non autorisé est interdit.",
+                "Manipulation de votes": "Non conforme : Manipuler des votes ou des classements est interdit.",
+                "Publication de contenu choquant": "Non conforme : La publication de contenu violent, gore ou choquant est interdite.",
+                "Utilisation de mods illégaux": "Non conforme : Les modifications non autorisées de Discord sont interdites.",
+                "Promotion de drogues illégales": "Non conforme : La promotion ou vente de drogues illégales est interdite.",
+                "Hameçonnage d'informations bancaires": "Non conforme : Toute tentative de collecter des informations bancaires est interdite.",
+                "Organisation de raids": "Non conforme : Organiser ou inciter à des raids sur des serveurs Discord est interdit.",
+                "Falsification de preuves": "Non conforme : La falsification de preuves pour accuser un utilisateur est interdite.",
+                "Accès non autorisé aux serveurs": "Non conforme : L'accès non autorisé aux serveurs ou comptes est interdit.",
+                "Promouvoir des contenus terroristes": "Non conforme : La promotion de contenus terroristes ou violents est strictement interdite.",
+                "Fraude ou arnaques": "Non conforme : Toute forme de fraude ou d'arnaque est interdite.",
+                "Partager des contenus non consensuels": "Non conforme : Partager des contenus privés sans consentement est interdit.",
+                "Discours haineux": "Non conforme : Tout discours haineux ou discriminatoire est strictement interdit.",
+                "Revente de comptes": "Non conforme : La revente de comptes Discord est interdite.",
+                "Collecte de données utilisateur": "Non conforme : Collecter des données utilisateur sans consentement est interdit.",
+                "Création de serveurs pour activités illégales": "Non conforme : Les serveurs promouvant des activités illégales sont interdits.",
+                "Non-respect des consignes des modérateurs": "Non conforme : Ignorer ou contester les consignes des modérateurs est interdit."
+            };
+
+            const response = responses[searchInput] || "Aucune information trouvée. Veuillez consulter les ToS officiels de Discord.";
+            resultsDiv.innerHTML = `<p>${response}</p>`;
+
+            // Envoie au backend l'action et le résultat
+            logSearch(searchInput, response);
+        }
+    </script>
+</body>
+</html>
