@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat IA</title>
+    <title>Chat IA Gratuit</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -69,8 +69,7 @@
         const userInput = document.getElementById("user-input");
         const sendButton = document.getElementById("send-button");
 
-        const API_KEY = "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"; // Remplacez par votre clé API OpenAI
-        const API_URL = "https://api.openai.com/v1/chat/completions";
+        const API_URL = "https://dummyjson.com/quotes/random"; // API simple simulant un chatbot
 
         const addMessage = (message, type) => {
             const messageElement = document.createElement("div");
@@ -87,25 +86,9 @@
 
         const getIaResponse = async (userMessage) => {
             try {
-                const response = await fetch(API_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${API_KEY}`,
-                    },
-                    body: JSON.stringify({
-                        model: "gpt-3.5-turbo",
-                        messages: [{ role: "user", content: userMessage }],
-                    }),
-                });
-
+                const response = await fetch(API_URL);
                 const data = await response.json();
-                if (response.ok && data.choices && data.choices[0].message.content) {
-                    return data.choices[0].message.content;
-                } else {
-                    console.error(data);
-                    return "Erreur : Impossible d'obtenir une réponse de l'IA.";
-                }
+                return data.quote || "Désolé, je n'ai pas de réponse pour vous.";
             } catch (error) {
                 console.error(error);
                 return "Erreur : Une erreur s'est produite lors de la connexion à l'API.";
@@ -127,18 +110,7 @@
                 sendButton.click();
             }
         });
-
-import OpenAI from "openai";
-const openai = new OpenAI();
-const completion = await openai.chat.completions.create({
-    model: "gpt-4o",
-    store: true,
-    messages: [
-        {"role": "user", "content": "write a haiku about ai"}
-    ]
-});
-
-        
     </script>
 </body>
 </html>
+
