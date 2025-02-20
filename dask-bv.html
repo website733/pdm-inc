@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dask BV Captcha</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .captcha-container {
+            display: inline-block;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .captcha-code {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            background-color: #f3f3f3;
+            padding: 5px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        .input-container {
+            margin-top: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Veuillez entrer le code affiché :</h2>
+    <div class="captcha-container">
+        <div class="captcha-code" id="captchaCode"></div>
+        <button onclick="generateCaptcha()">🔄</button>
+    </div>
+    <div class="input-container">
+        <input type="text" id="captchaInput" placeholder="Recopiez le code">
+        <button onclick="validateCaptcha()">Valider</button>
+    </div>
+    <p id="captchaMessage" class="hidden"></p>
+
+    <script>
+        function generateCaptcha() {
+            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
+            let captcha = "";
+            for (let i = 0; i < 6; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById("captchaCode").textContent = captcha;
+            document.getElementById("captchaMessage").classList.add("hidden");
+        }
+
+        function validateCaptcha() {
+            const input = document.getElementById("captchaInput").value.trim();
+            const captcha = document.getElementById("captchaCode").textContent;
+            const message = document.getElementById("captchaMessage");
+            
+            if (input === captcha) {
+                window.location.href = "https://pdm-inc.vercel.app/";
+            } else {
+                location.reload();
+            }
+        }
+        
+        window.onload = generateCaptcha;
+    </script>
+</body>
+</html>
